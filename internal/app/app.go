@@ -4,10 +4,13 @@ import (
 	"database/sql"
 	"net/http"
 
+	"os"
+
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/cors"
 	"github.com/gorilla/sessions"
 
 	"github.com/donamo/artline-backend/internal/auth"
@@ -47,6 +50,18 @@ func (a *App) buildRouter(authHandler *auth.Handler, store *sessions.CookieStore
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
+
+	frontendURL := os.Getenv("FRONTEND_URL")
+	if frontendURL == "" {
+		frontendURL = "http://localhost:5173"
+	}
+	r.Use(cors.Handler(cors.Options{
+		AllowedOrigins:   []string{frontendURL},
+		AllowedMethods:   []string{"GET", "POST", "OPTIONS"},
+		AllowedHeaders:   []string{"Content-Type"},
+		AllowCredentials: true,
+	}))
+
 	r.Use(auth.SessionMiddleware(a.DB, store))
 
 	r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
