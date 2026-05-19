@@ -9,5 +9,5 @@ FROM alpine:3.21
 RUN apk add --no-cache ca-certificates tzdata wget
 WORKDIR /app
 COPY --from=builder /app/artline-backend .
-EXPOSE 8080
+EXPOSE 3000
 ENTRYPOINT ["./artline-backend"]

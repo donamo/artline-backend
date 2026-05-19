@@ -37,7 +37,7 @@ info:
     All other operations go through GraphQL at POST /graphql.
 
 servers:
-  - url: http://localhost:8080
+  - url: http://localhost:3000
     description: Local dev
 
 paths:
