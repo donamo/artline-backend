@@ -1,0 +1,75 @@
+type User {
+  id: ID!
+  email: String!
+  displayName: String
+}
+
+type CreativeProject {
+  id: ID!
+  title: String!
+  description: String
+  startYear: Int!
+  startMonth: Int!
+  lyrics: String
+  creationMethod: String
+  links: [CreativeProjectLink!]!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type CreativeProjectLink {
+  id: ID!
+  platform: CreativeProjectLinkPlatform!
+  url: String!
+  label: String
+  sortOrder: Int!
+}
+
+enum CreativeProjectLinkPlatform {
+  YOUTUBE
+  SPOTIFY
+  SOUNDCLOUD
+  INSTAGRAM_REELS
+  TIKTOK
+  WEBSITE
+  OTHER
+}
+
+input CreateCreativeProjectInput {
+  title: String!
+  description: String
+  startYear: Int!
+  startMonth: Int!
+  lyrics: String
+  creationMethod: String
+  links: [CreativeProjectLinkInput!]
+}
+
+input UpdateCreativeProjectInput {
+  title: String
+  description: String
+  startYear: Int
+  startMonth: Int
+  lyrics: String
+  creationMethod: String
+  links: [CreativeProjectLinkInput!]
+}
+
+input CreativeProjectLinkInput {
+  platform: CreativeProjectLinkPlatform!
+  url: String!
+  label: String
+  sortOrder: Int
+}
+
+type Query {
+  me: User
+  myCreativeProjects: [CreativeProject!]!
+  creativeProject(id: ID!): CreativeProject
+}
+
+type Mutation {
+  createCreativeProject(input: CreateCreativeProjectInput!): CreativeProject!
+  updateCreativeProject(id: ID!, input: UpdateCreativeProjectInput!): CreativeProject!
+  deleteCreativeProject(id: ID!): Boolean!
+}
