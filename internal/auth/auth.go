@@ -132,11 +132,15 @@ func (h *Handler) Me(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "unauthorized", http.StatusUnauthorized)
 		return
 	}
+	var displayName *string
+	if user.DisplayName.Valid {
+		displayName = &user.DisplayName.String
+	}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(map[string]any{
 		"id":          user.ID,
 		"email":       user.Email,
-		"displayName": user.DisplayName,
+		"displayName": displayName,
 	})
 }
 
