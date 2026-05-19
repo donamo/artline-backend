@@ -55,7 +55,7 @@ func (a *App) buildRouter(authHandler *auth.Handler, store *sessions.CookieStore
 	})
 
 	r.Get("/auth/google/login", authHandler.Login)
-	r.Get("/auth/google/callback", authHandler.Callback)
+	r.Get("/auth/callback/google", authHandler.Callback)
 	r.Post("/auth/logout", authHandler.Logout)
 
 	r.With(auth.RequireAuth).Get("/auth/me", authHandler.Me)

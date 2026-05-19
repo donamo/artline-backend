@@ -64,7 +64,7 @@ paths:
         "307":
           description: Redirect to Google
 
-  /auth/google/callback:
+  /auth/callback/google:
     get:
       summary: Google OAuth callback — sets session cookie and redirects to frontend
       operationId: authGoogleCallback
